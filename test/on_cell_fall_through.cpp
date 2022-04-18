@@ -7,14 +7,14 @@
 struct EventData
 {
     connect_four::Player player;
-    uint8_t row;
-    uint8_t col;
+    uint_least8_t row;
+    uint_least8_t col;
     bool is_final_position;
 };
 
 connect_four::CellFallThroughHandler create_handler(std::vector<EventData>* memo)
 {
-    return [memo](connect_four::Player player, uint8_t row, uint8_t col, bool is_final_position) mutable
+    return [memo](connect_four::Player player, uint_least8_t row, uint_least8_t col, bool is_final_position) mutable
     {
         memo->push_back({player, row, col, is_final_position});
     };

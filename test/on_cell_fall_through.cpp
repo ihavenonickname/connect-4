@@ -4,19 +4,11 @@
 
 #include "Game.hpp"
 
-struct EventData
+std::function<void (connect_four::CellFallThroughEventData)> create_handler(std::vector<connect_four::CellFallThroughEventData>* memo)
 {
-    connect_four::Player player;
-    uint_least8_t row;
-    uint_least8_t col;
-    bool is_final_position;
-};
-
-connect_four::CellFallThroughHandler create_handler(std::vector<EventData>* memo)
-{
-    return [memo](connect_four::Player player, uint_least8_t row, uint_least8_t col, bool is_final_position) mutable
+    return [memo](connect_four::CellFallThroughEventData event_data) mutable
     {
-        memo->push_back({player, row, col, is_final_position});
+        memo->push_back(event_data);
     };
 }
 
@@ -26,7 +18,7 @@ SCENARIO("On cell fall through event")
     {
         connect_four::Game game(6, 7, connect_four::Player::PLAYER_1);
 
-        std::vector<EventData> memo;
+        std::vector<connect_four::CellFallThroughEventData> memo;
 
         game.on_event(create_handler(&memo));
 

@@ -5,6 +5,8 @@
 #include <vector>
 
 #include "Board.hpp"
+#include "CellFallThroughEventData.hpp"
+#include "GameEndEventData.hpp"
 #include "Player.hpp"
 #include "PlayResult.hpp"
 #include "Position.hpp"
@@ -46,7 +48,14 @@ namespace connect_four
 
             for (auto handler : this->_cell_fall_through_handlers)
             {
-                handler(this->_player, row, col, is_final);
+                CellFallThroughEventData event_data;
+
+                event_data._player = this->_player;
+                event_data._row = row;
+                event_data._col = col;
+                event_data._is_final_position = is_final;
+
+                handler(event_data);
             }
 
             if (is_final)
@@ -63,9 +72,13 @@ namespace connect_four
         {
             this->_ended = true;
 
-            for (auto handler : this->_game_ended_handlers)
+            for (auto handler : this->_game_end_handlers)
             {
-                handler(this->_player);
+                GameEndEventData event_data;
+
+                event_data._winner = this->_player;
+
+                handler(event_data);
             }
         }
         else
@@ -79,14 +92,14 @@ namespace connect_four
         return PlayResult::SUCCESS;
     }
 
-    void Game::on_event(CellFallThroughHandler handler)
+    void Game::on_event(std::function<void (CellFallThroughEventData)> handler)
     {
         this->_cell_fall_through_handlers.push_back(handler);
     }
 
-    void Game::on_event(GameEndHandler handler)
+    void Game::on_event(std::function<void (GameEndEventData)> handler)
     {
-        this->_game_ended_handlers.push_back(handler);
+        this->_game_end_handlers.push_back(handler);
     }
 
     bool Game::_check_victory(Position position)

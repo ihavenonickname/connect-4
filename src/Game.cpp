@@ -25,7 +25,7 @@ namespace connect_four
             return PlayResult::GAME_ALREADY_ENDED;
         }
 
-        Position position = Position(0, col);
+        auto position = Position(0, col);
 
         if (!this->_board.is_inbound(position))
         {
@@ -89,35 +89,12 @@ namespace connect_four
         this->_game_ended_handlers.push_back(handler);
     }
 
-    Position Game::_fall_to_right_cell(Position position)
-    {
-        while (true)
-        {
-            auto row = static_cast<uint_least8_t>(position.row());
-            auto col = static_cast<uint_least8_t>(position.col());
-            auto next_pos = position.add_row(1);
-            auto is_final = !this->_board.is_empty(next_pos);
-
-            for (auto handler : this->_cell_fall_through_handlers)
-            {
-                handler(this->_player, row, col, is_final);
-            }
-
-            if (is_final)
-            {
-                return next_pos;
-            }
-
-            position = next_pos;
-        }
-    }
-
     bool Game::_check_victory(Position position)
     {
         // Check horizontally...
 
         auto counter = 1;
-        Position temp_pos = position.add_col(1);
+        auto temp_pos = position.add_col(1);
 
         while (this->_board.is_filled(temp_pos, this->_player))
         {

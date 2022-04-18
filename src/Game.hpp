@@ -21,7 +21,6 @@ namespace connect_four
         std::vector<CellFallThroughHandler> _cell_fall_through_handlers;
         std::vector<GameEndHandler> _game_ended_handlers;
 
-        Position _fall_to_right_cell(Position position);
         bool _check_victory(Position position);
 
         public:

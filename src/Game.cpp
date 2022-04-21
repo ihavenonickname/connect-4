@@ -29,7 +29,7 @@ namespace connect_four
 
         auto position = Position(0, col);
 
-        if (!this->_board.is_inbound(position))
+        if (!this->_board.is_inside(position))
         {
             return PlayResult::COLUMN_IS_INVALID;
         }
@@ -104,102 +104,35 @@ namespace connect_four
 
     bool Game::_check_victory(Position position)
     {
-        // Check horizontally...
+        #define sorry(expr) [](Position pos, int_least16_t offset) { return expr; }
 
-        auto counter = 1;
-        auto temp_pos = position.add_col(1);
-
-        while (this->_board.is_filled(temp_pos, this->_player))
+        auto _internal = [this, position](std::function<Position (Position, int_least16_t)> f_next)
         {
-            temp_pos = temp_pos.add_col(1);
-            counter += 1;
-        }
+            auto counter = 1;
+            auto temp_pos = f_next(position, 1);
 
-        temp_pos = position.add_col(-1);
+            while (this->_board.is_filled(temp_pos, this->_player))
+            {
+                temp_pos = f_next(temp_pos, 1);
+                counter += 1;
+            }
 
-        while (this->_board.is_filled(temp_pos, this->_player))
-        {
-            temp_pos = temp_pos.add_col(-1);
-            counter += 1;
-        }
+            temp_pos = f_next(position, -1);
 
-        if (counter >= 4)
-        {
-            return true;
-        }
+            while (this->_board.is_filled(temp_pos, this->_player))
+            {
+                temp_pos = f_next(temp_pos, -1);
+                counter += 1;
+            }
 
-        // Check vertically...
+            return counter >= 4;
+        };
 
-        counter = 1;
-        temp_pos = position.add_row(1);
+        return
+            _internal(sorry(pos.add_col(offset))) ||
+            _internal(sorry(pos.add_row(offset))) ||
+            _internal(sorry(pos.add_row(1).add_col(offset))) ||
+            _internal(sorry(pos.add_row(1).add_col(offset)));
 
-        while (this->_board.is_filled(temp_pos, this->_player))
-        {
-            temp_pos = temp_pos.add_row(1);
-            counter += 1;
-        }
-
-        temp_pos = position.add_row(-1);
-
-        while (this->_board.is_filled(temp_pos, this->_player))
-        {
-            temp_pos = temp_pos.add_row(-1);
-            counter += 1;
-        }
-
-        if (counter >= 4)
-        {
-            return true;
-        }
-
-        // Check main diagonal...
-
-        counter = 1;
-        temp_pos = position.add_row(1).add_col(1);
-
-        while (this->_board.is_filled(temp_pos, this->_player))
-        {
-            temp_pos = temp_pos.add_row(1).add_col(1);
-            counter += 1;
-        }
-
-        temp_pos = position.add_row(-1).add_col(-1);
-
-        while (this->_board.is_filled(temp_pos, this->_player))
-        {
-            temp_pos = temp_pos.add_row(-1).add_col(-1);
-            counter += 1;
-        }
-
-        if (counter >= 4)
-        {
-            return true;
-        }
-
-        // Check secondary diagonal...
-
-        counter = 1;
-        temp_pos = position.add_row(1).add_col(-1);
-
-        while (this->_board.is_filled(temp_pos, this->_player))
-        {
-            temp_pos = temp_pos.add_row(1).add_col(-1);
-            counter += 1;
-        }
-
-        temp_pos = position.add_row(-1).add_col(1);
-
-        while (this->_board.is_filled(temp_pos, this->_player))
-        {
-            temp_pos = temp_pos.add_row(-1).add_col(1);
-            counter += 1;
-        }
-
-        if (counter >= 4)
-        {
-            return true;
-        }
-
-        return false;
     }
 }

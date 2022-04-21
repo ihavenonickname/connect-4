@@ -2,11 +2,13 @@
 
 #include "Game.hpp"
 
-SCENARIO("Result responses")
+using namespace connect_four;
+
+SCENARIO("Play happy path")
 {
     GIVEN("An empty board")
     {
-        connect_four::Game game(6, 7, connect_four::Player::PLAYER_1);
+        Game game(6, 7, Player::PLAYER_1);
 
         WHEN("The player chooses the first column")
         {
@@ -14,14 +16,17 @@ SCENARIO("Result responses")
 
             THEN("The game accepts the play")
             {
-                REQUIRE(connect_four::PlayResult::SUCCESS == play_result);
+                REQUIRE(PlayResult::SUCCESS == play_result);
             }
         }
     }
+}
 
+SCENARIO("A column that is full cannot accept any more plays")
+{
     GIVEN("A board whose first column is full")
     {
-        connect_four::Game game(6, 7, connect_four::Player::PLAYER_1);
+        Game game(6, 7, Player::PLAYER_1);
 
         game.play(0);
         game.play(0);
@@ -36,14 +41,17 @@ SCENARIO("Result responses")
 
             THEN("The game does not accept the play")
             {
-                REQUIRE(connect_four::PlayResult::COLUMN_IS_FULL == play_result);
+                REQUIRE(PlayResult::COLUMN_IS_FULL == play_result);
             }
         }
     }
+}
 
+SCENARIO("The chosen column must be validated")
+{
     GIVEN("A 6-row-per-7-column board")
     {
-        connect_four::Game game(6, 7, connect_four::Player::PLAYER_1);
+        Game game(6, 7, Player::PLAYER_1);
 
         WHEN("The player chooses the 8th column")
         {
@@ -51,7 +59,7 @@ SCENARIO("Result responses")
 
             THEN("The game does not accept the play")
             {
-                REQUIRE(connect_four::PlayResult::COLUMN_IS_INVALID == play_result);
+                REQUIRE(PlayResult::COLUMN_IS_INVALID == play_result);
             }
         }
     }

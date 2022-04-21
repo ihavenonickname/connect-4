@@ -20,7 +20,7 @@ namespace connect_four
         this->_cells.resize(row_count, row);
     }
 
-    bool Board::is_inbound(Position position)
+    bool Board::is_inside(Position position)
     {
         return
             position.row() >= 0 &&
@@ -31,13 +31,13 @@ namespace connect_four
 
     bool Board::is_empty(Position position)
     {
-        return this->is_inbound(position) && !at(position).second;
+        return this->is_inside(position) && !at(position).second;
     }
 
     bool Board::is_filled(Position position, Player player)
     {
         return
-            this->is_inbound(position) &&
+            this->is_inside(position) &&
             at(position).second &&
             at(position).first == player;
     }

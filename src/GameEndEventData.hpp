@@ -1,12 +1,12 @@
 #pragma once
 
-class Game;
-
 #include "Game.hpp"
 #include "Player.hpp"
 
 namespace connect_four
 {
+    class Game;
+
     class GameEndEventData
     {
         friend class Game;

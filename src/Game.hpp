@@ -3,9 +3,6 @@
 #include <cstdint>
 #include <functional>
 
-class CellFallThroughEventData;
-class GameEndEventData;
-
 #include "Board.hpp"
 #include "CellFallThroughEventData.hpp"
 #include "GameEndEventData.hpp"
@@ -15,6 +12,9 @@ class GameEndEventData;
 
 namespace connect_four
 {
+    class CellFallThroughEventData;
+    class GameEndEventData;
+
     class Game
     {
         Player _player;

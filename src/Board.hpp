@@ -18,7 +18,7 @@ namespace connect_four
 
         Board(uint_least8_t row_count, uint_least8_t col_count);
 
-        bool is_inbound(Position position);
+        bool is_inside(Position position);
         bool is_empty(Position position);
         bool is_filled(Position position, Player player);
         void set(Position position, Player player);

@@ -1,20 +1,21 @@
-.PHONY := clean
+.PHONY := clean test
 
 CPPC := clang++
 CPPFLAGS := -std=c++11 -Werror -Wall -Wpedantic -Wconversion
 
 SRCS := $(wildcard src/*.cpp)
 TSTS := $(wildcard test/*.cpp)
-BINS := $(SRCS:%.cpp=%) + $(TSTS:%.cpp=%)
 INCL := -Ivendor -Isrc
 
-build/main: ${SRCS}
-	@echo "Compiling ${SRCS}"
-	${CPPC} ${CPPFLAGS} ${INCL} ${SRCS} -o build/main
-
 clean:
-	@echo "Removing garbage"
-	rm -rf run_test
+	@echo "Removing garbage..."
+	rm -rf *.o run_test
+	@echo "Ok"
 
-run_test: ${TSTS} ${SRCS}
-	${CPPC} -std=c++11 ${INCL} ${TSTS} ${SRCS} -o run_test
+test: ${TSTS} ${SRCS}
+	@echo "Checking for warnings..."
+	${CPPC} ${CPPFLAGS} ${INCL} ${SRCS} -c
+	@echo "Ok"
+	@echo "Building test executable..."
+	${CPPC} ${INCL} ${TSTS} ${SRCS} -o run_test
+	@echo "Ok"

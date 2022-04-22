@@ -8,7 +8,7 @@ SCENARIO("Play happy path")
 {
     GIVEN("An empty board")
     {
-        Game game(6, 7, Player::PLAYER_1);
+        Game game(6, 7);
 
         WHEN("The player chooses the first column")
         {
@@ -26,7 +26,7 @@ SCENARIO("A column that is full cannot accept any more plays")
 {
     GIVEN("A board whose first column is full")
     {
-        Game game(6, 7, Player::PLAYER_1);
+        Game game(6, 7);
 
         game.play(0);
         game.play(0);
@@ -51,7 +51,7 @@ SCENARIO("The chosen column must be validated")
 {
     GIVEN("A 6-row-per-7-column board")
     {
-        Game game(6, 7, Player::PLAYER_1);
+        Game game(6, 7);
 
         WHEN("The player chooses the 8th column")
         {

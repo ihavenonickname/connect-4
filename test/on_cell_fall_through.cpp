@@ -12,7 +12,7 @@ SCENARIO("Cell fall through event happy path")
 {
     GIVEN("An empty 6-row-per-7-column board")
     {
-        Game game(6, 7, Player::PLAYER_1);
+        Game game(6, 7);
 
         std::vector<CellFallThroughEventData> memo;
 

@@ -6,17 +6,17 @@
 
 #include "Board.hpp"
 #include "CellFallThroughEventData.hpp"
-#include "GameEndEventData.hpp"
+#include "WinEventData.hpp"
 #include "Player.hpp"
 #include "PlayResult.hpp"
 #include "Position.hpp"
 
 namespace connect_four
 {
-    Game::Game(uint_least8_t row_count, uint_least8_t col_count, Player starting)
+    Game::Game(uint_least8_t row_count, uint_least8_t col_count)
         : _board(row_count, col_count)
     {
-        this->_player = starting;
+        this->_player = Player::PLAYER_1;
         this->_ended = false;
     }
 
@@ -72,9 +72,9 @@ namespace connect_four
         {
             this->_ended = true;
 
-            for (auto handler : this->_game_end_handlers)
+            for (auto handler : this->_win_handlers)
             {
-                GameEndEventData event_data;
+                WinEventData event_data;
 
                 event_data._winner = this->_player;
 
@@ -97,16 +97,16 @@ namespace connect_four
         this->_cell_fall_through_handlers.push_back(handler);
     }
 
-    void Game::on_event(std::function<void (GameEndEventData)> handler)
+    void Game::on_event(std::function<void (WinEventData)> handler)
     {
-        this->_game_end_handlers.push_back(handler);
+        this->_win_handlers.push_back(handler);
     }
 
     bool Game::_check_victory(Position position)
     {
-        #define sorry(expr) [](Position pos, int_least16_t offset) { return expr; }
+        #define make_lambda(expr) [](Position pos, int_least16_t offset) { return expr; }
 
-        auto _internal = [this, position](std::function<Position (Position, int_least16_t)> f_next)
+        auto _check = [this, position](std::function<Position (Position, int_least16_t)> f_next)
         {
             auto counter = 1;
             auto temp_pos = f_next(position, 1);
@@ -128,11 +128,14 @@ namespace connect_four
             return counter >= 4;
         };
 
-        return
-            _internal(sorry(pos.add_col(offset))) ||
-            _internal(sorry(pos.add_row(offset))) ||
-            _internal(sorry(pos.add_row(1).add_col(offset))) ||
-            _internal(sorry(pos.add_row(1).add_col(offset)));
+        auto vertial = make_lambda(pos.add_col(offset));
+        auto horizontal = make_lambda(pos.add_row(offset));
+        auto main_diag = make_lambda(pos.add_row(offset).add_col(offset));
+        auto sec_diag = make_lambda(pos.add_row(-offset).add_col(offset));
 
+        return _check(vertical) ||
+            _check(horizontal) ||
+            _check(main_diag) ||
+            _check(sec_diag);
     }
 }

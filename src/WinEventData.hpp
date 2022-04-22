@@ -7,7 +7,7 @@ namespace connect_four
 {
     class Game;
 
-    class GameEndEventData
+    class WinEventData
     {
         friend class Game;
 

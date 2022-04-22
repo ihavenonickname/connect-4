@@ -41,20 +41,18 @@ namespace connect_four
 
         while (true)
         {
-            auto row = static_cast<uint_least8_t>(position.row());
-            auto col = static_cast<uint_least8_t>(position.col());
             auto next_pos = position.add_row(1);
             auto is_final = !this->_board.is_empty(next_pos);
 
-            for (auto handler : this->_cell_fall_through_handlers)
+            CellFallThroughEventData event_data(
+                this->_player,
+                static_cast<uint_least8_t>(position.row()),
+                static_cast<uint_least8_t>(position.col()),
+                is_final
+            );
+
+            for (auto const & handler : this->_cell_fall_through_handlers)
             {
-                CellFallThroughEventData event_data;
-
-                event_data._player = this->_player;
-                event_data._row = row;
-                event_data._col = col;
-                event_data._is_final_position = is_final;
-
                 handler(event_data);
             }
 
@@ -72,12 +70,10 @@ namespace connect_four
         {
             this->_ended = true;
 
-            for (auto handler : this->_win_handlers)
+            WinEventData event_data(this->_player);
+
+            for (auto const & handler : this->_win_handlers)
             {
-                WinEventData event_data;
-
-                event_data._winner = this->_player;
-
                 handler(event_data);
             }
         }

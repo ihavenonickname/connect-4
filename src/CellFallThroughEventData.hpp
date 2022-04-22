@@ -5,21 +5,19 @@
 
 namespace connect_four
 {
-    class Game;
-
     class CellFallThroughEventData
     {
-        friend class Game;
-
-        connect_four::Player _player;
-        uint_least8_t _row;
-        uint_least8_t _col;
-        bool _is_final_position;
-
         public:
-        connect_four::Player player();
-        uint_least8_t row();
-        uint_least8_t col();
-        bool is_final_position();
+
+        connect_four::Player const player;
+        uint_least8_t const row;
+        uint_least8_t const col;
+        bool const is_final_position;
+
+        CellFallThroughEventData(
+            connect_four::Player const player,
+            uint_least8_t const row,
+            uint_least8_t const col,
+            bool const is_final_position);
     };
 }

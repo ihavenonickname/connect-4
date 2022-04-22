@@ -4,8 +4,6 @@
 
 namespace connect_four
 {
-    connect_four::Player WinEventData::winner()
-    {
-        return this->_winner;
-    }
+    WinEventData::WinEventData(Player const winner) : winner(winner)
+    { }
 }

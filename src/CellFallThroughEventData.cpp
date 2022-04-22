@@ -4,23 +4,15 @@
 
 namespace connect_four
 {
-    connect_four::Player CellFallThroughEventData::player()
-    {
-        return this->_player;
-    }
-
-    uint_least8_t CellFallThroughEventData::row()
-    {
-        return this->_row;
-    }
-
-    uint_least8_t CellFallThroughEventData::col()
-    {
-        return this->_col;
-    }
-
-    bool CellFallThroughEventData::is_final_position()
-    {
-        return this->_is_final_position;
-    }
+    CellFallThroughEventData::CellFallThroughEventData(
+        Player const player,
+        uint_least8_t const row,
+        uint_least8_t const col,
+        bool const is_final_position)
+    :
+        player(player),
+        row(row),
+        col(col),
+        is_final_position(is_final_position)
+    { }
 }

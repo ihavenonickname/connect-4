@@ -33,7 +33,7 @@ SCENARIO("Cell fall through event happy path")
             {
                 for (auto event : memo)
                 {
-                    REQUIRE(column == event.col());
+                    REQUIRE(column == event.col);
                 }
             }
 
@@ -41,28 +41,28 @@ SCENARIO("Cell fall through event happy path")
             {
                 for (auto event : memo)
                 {
-                    REQUIRE(Player::PLAYER_1 == event.player());
+                    REQUIRE(Player::PLAYER_1 == event.player);
                 }
             }
 
             THEN("The 1st event reports the 1st row")
             {
-                REQUIRE(0 == memo[0].row());
+                REQUIRE(0 == memo[0].row);
             }
 
             THEN("The 6th event reports the 6th row")
             {
-                REQUIRE(5 == memo[5].row());
+                REQUIRE(5 == memo[5].row);
             }
 
             THEN("The 6th event is reported as final position")
             {
-                REQUIRE(true == memo[5].is_final_position());
+                REQUIRE(true == memo[5].is_final_position);
             }
 
             THEN("The 1st event is not reported as final position")
             {
-                REQUIRE(false == memo[0].is_final_position());
+                REQUIRE(false == memo[0].is_final_position);
             }
         }
     }

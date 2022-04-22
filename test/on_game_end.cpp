@@ -54,7 +54,7 @@ SCENARIO("End game event emited on horizontal win")
             THEN("1 event is emited for player 1")
             {
                 REQUIRE(1 == memo.size());
-                REQUIRE(Player::PLAYER_1 == memo[0].winner());
+                REQUIRE(Player::PLAYER_1 == memo[0].winner);
             }
         }
     }
@@ -84,7 +84,7 @@ SCENARIO("End game event emited on vertical win")
             THEN("1 event is emited for player 1")
             {
                 REQUIRE(1 == memo.size());
-                REQUIRE(Player::PLAYER_1 == memo[0].winner());
+                REQUIRE(Player::PLAYER_1 == memo[0].winner);
             }
         }
     }
@@ -118,7 +118,7 @@ SCENARIO("End game event emited on main diagonal win")
             THEN("1 event is emited for player 1")
             {
                 REQUIRE(1 == memo.size());
-                REQUIRE(Player::PLAYER_1 == memo[0].winner());
+                REQUIRE(Player::PLAYER_1 == memo[0].winner);
             }
         }
     }
@@ -152,7 +152,7 @@ SCENARIO("End game event emited on secondary diagonal win")
             THEN("1 event is emited for player 1")
             {
                 REQUIRE(1 == memo.size());
-                REQUIRE(Player::PLAYER_1 == memo[0].winner());
+                REQUIRE(Player::PLAYER_1 == memo[0].winner);
             }
         }
     }
@@ -184,7 +184,7 @@ SCENARIO("End game event emited on win when last play at the middle")
             THEN("1 event is emited for player 1")
             {
                 REQUIRE(1 == memo.size());
-                REQUIRE(Player::PLAYER_1 == memo[0].winner());
+                REQUIRE(Player::PLAYER_1 == memo[0].winner);
             }
         }
     }
@@ -215,7 +215,7 @@ SCENARIO("End game event emited on player 2 win")
             THEN("1 event is emited for player 2")
             {
                 REQUIRE(1 == memo.size());
-                REQUIRE(Player::PLAYER_2 == memo[0].winner());
+                REQUIRE(Player::PLAYER_2 == memo[0].winner);
             }
         }
     }

@@ -128,7 +128,7 @@ namespace connect_four
             return counter >= 4;
         };
 
-        auto vertial = make_lambda(pos.add_col(offset));
+        auto vertical = make_lambda(pos.add_col(offset));
         auto horizontal = make_lambda(pos.add_row(offset));
         auto main_diag = make_lambda(pos.add_row(offset).add_col(offset));
         auto sec_diag = make_lambda(pos.add_row(-offset).add_col(offset));

@@ -1,4 +1,4 @@
-.PHONY := clean test
+.PHONY := clean tests
 
 CPPC := clang++
 CPPFLAGS := -std=c++11 -Werror -Wall -Wpedantic -Wconversion
@@ -15,7 +15,7 @@ clean:
 	rm -rf *.o run_test
 	@echo "Ok"
 
-test: ${TSTS} ${SRCS}
+tests:
 	@echo "Checking code with linter..."
 	${LINTER} ${LINTERFLAGS} ${SRCS} ${TSTS}
 	@echo "Ok"
@@ -25,5 +25,5 @@ test: ${TSTS} ${SRCS}
 	@echo "Ok"
 
 	@echo "Building test executable..."
-	${CPPC} ${INCL} ${TSTS} ${SRCS} -o run_test
+	${CPPC} ${INCL} ${TSTS} ${SRCS} -o run_tests
 	@echo "Ok"

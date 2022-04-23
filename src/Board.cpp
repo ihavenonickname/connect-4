@@ -7,43 +7,43 @@
 
 namespace connect_four
 {
-    #define at(position) (this->_cells[static_cast<std::size_t>(position.row)][static_cast<std::size_t>(position.col)])
-
-    Board::Board(uint_least8_t const row_count, uint_least8_t const col_count)
-    {
-        this->_row_count = row_count;
-        this->_col_count = col_count;
-
-        auto empty = std::make_pair(Player::PLAYER_1, false);
-        auto row = std::vector<std::pair<Player, bool>>(col_count, empty);
-
-        this->_cells.resize(row_count, row);
-    }
+    Board::Board(uint_least8_t const row_count, uint_least8_t const col_count):
+        _row_count(row_count),
+        _col_count(col_count),
+        _cells(row_count * col_count)
+    { }
 
     bool Board::is_inside(Position const position)
     {
         return
             position.row >= 0 &&
             position.col >= 0 &&
-            position.row < this->_row_count &&
-            position.col < this->_col_count;
+            position.row < _row_count &&
+            position.col < _col_count;
     }
 
     bool Board::is_empty(Position const position)
     {
-        return this->is_inside(position) && !at(position).second;
+        return is_inside(position) && !_at(position).is_filled;
     }
 
     bool Board::is_filled(Position const position, Player const player)
     {
         return
-            this->is_inside(position) &&
-            at(position).second &&
-            at(position).first == player;
+            is_inside(position) &&
+            _at(position).is_filled &&
+            _at(position).player == player;
     }
 
     void Board::set(Position const position, Player const player)
     {
-        at(position) = std::make_pair(player, true);
+        _at(position) = Cell{player, true};
+    }
+
+    Cell & Board::_at(Position const & position)
+    {
+        auto index = position.row * _col_count + position.col;
+
+        return _cells[static_cast<uint8_t>(index)];
     }
 }

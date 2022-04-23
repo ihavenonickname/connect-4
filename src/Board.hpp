@@ -3,6 +3,7 @@
 #include <cstdint>
 #include <vector>
 
+#include "Cell.hpp"
 #include "Player.hpp"
 #include "Position.hpp"
 
@@ -12,7 +13,9 @@ namespace connect_four
     {
         uint_least8_t _row_count;
         uint_least8_t _col_count;
-        std::vector<std::vector<std::pair<Player, bool>>> _cells;
+        std::vector<Cell> _cells;
+
+        Cell & _at(Position const & position);
 
         public:
 

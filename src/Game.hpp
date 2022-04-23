@@ -17,8 +17,8 @@ namespace connect_four
         Player _player;
         Board _board;
         bool _ended;
-        std::vector<std::function<void (CellFallThroughEventData)>> _cell_fall_through_handlers;
-        std::vector<std::function<void (WinEventData)>> _win_handlers;
+        std::function<void (CellFallThroughEventData)> _cell_fall_through_handler;
+        std::function<void (WinEventData)> _win_handler;
 
         bool _check_victory(Position position);
         Position _fall_to_right_row(Position current_position);

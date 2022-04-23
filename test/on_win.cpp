@@ -8,7 +8,7 @@
 
 using namespace connect_four;
 
-SCENARIO("End game event not emited on normal, non-winning play")
+SCENARIO("Win event not emited on normal, non-winning play")
 {
     GIVEN("An empty 6-row-per-7-column board")
     {
@@ -30,8 +30,19 @@ SCENARIO("End game event not emited on normal, non-winning play")
     }
 }
 
-SCENARIO("End game event emited on horizontal win")
+SCENARIO("Win event emited on horizontal win")
 {
+    //
+    //   : 1 : 2 : 3 : 4 : 5 : 6 : 7 :
+    //   :---:---:---:---:---:---:---:
+    // 1 :   :   :   :   :   :   :   :
+    // 2 :   :   :   :   :   :   :   :
+    // 3 :   :   :   :   :   :   :   :
+    // 4 :   :   :   :   :   :   :   :
+    // 5 : O : O : O :   :   :   :   :
+    // 6 : X : X : X :   :   :   :   :
+    //   :---------------------------:
+
     GIVEN("A 6-row-per-7-column board with state 112233")
     {
         Game game(6, 7);
@@ -47,7 +58,7 @@ SCENARIO("End game event emited on horizontal win")
         game.play(2);
         game.play(2);
 
-        WHEN("Play on the 4th column")
+        WHEN("The player chooses the 4th column")
         {
             game.play(3);
 
@@ -60,8 +71,18 @@ SCENARIO("End game event emited on horizontal win")
     }
 }
 
-SCENARIO("End game event emited on vertical win")
+SCENARIO("Win event emited on vertical win")
 {
+    //   : 1 : 2 : 3 : 4 : 5 : 6 : 7 :
+    //   :---:---:---:---:---:---:---:
+    // 1 :   :   :   :   :   :   :   :
+    // 2 :   :   :   :   :   :   :   :
+    // 3 :   :   :   :   :   :   :   :
+    // 4 : X : O :   :   :   :   :   :
+    // 5 : X : O :   :   :   :   :   :
+    // 6 : X : O :   :   :   :   :   :
+    //   :---------------------------:
+
     GIVEN("A 6-row-per-7-column board with state 121212")
     {
         Game game(6, 7);
@@ -77,7 +98,7 @@ SCENARIO("End game event emited on vertical win")
         game.play(0);
         game.play(1);
 
-        WHEN("Play on the 1th column")
+        WHEN("The player chooses the 1th column")
         {
             game.play(0);
 
@@ -90,8 +111,18 @@ SCENARIO("End game event emited on vertical win")
     }
 }
 
-SCENARIO("End game event emited on main diagonal win")
+SCENARIO("Win event emited on main diagonal win")
 {
+    //   : 1 : 2 : 3 : 4 : 5 : 6 : 7 :
+    //   :---:---:---:---:---:---:---:
+    // 1 :   :   :   :   :   :   :   :
+    // 2 :   :   :   :   :   :   :   :
+    // 3 : X :   :   :   :   :   :   :
+    // 4 : O :   : O :   :   :   :   :
+    // 5 : O : O : X :   :   :   :   :
+    // 6 : X : X : O : X :   :   :   :
+    //   :---------------------------:
+
     GIVEN("A 6-row-per-7-column board with state 1121124333")
     {
         Game game(6, 7);
@@ -111,7 +142,7 @@ SCENARIO("End game event emited on main diagonal win")
         game.play(2);
         game.play(2);
 
-        WHEN("Play on the 2nd column")
+        WHEN("The player chooses the 2nd column")
         {
             game.play(1);
 
@@ -124,8 +155,18 @@ SCENARIO("End game event emited on main diagonal win")
     }
 }
 
-SCENARIO("End game event emited on secondary diagonal win")
+SCENARIO("Win event emited on secondary diagonal win")
 {
+    //   : 1 : 2 : 3 : 4 : 5 : 6 : 7 :
+    //   :---:---:---:---:---:---:---:
+    // 1 :   :   :   :   :   :   :   :
+    // 2 :   :   :   :   :   :   :   :
+    // 3 :   :   : O :   :   :   :   :
+    // 4 :   :   : X : O :   :   :   :
+    // 5 :   : X : X : O :   :   :   :
+    // 6 : X : O : X : O :   :   :   :
+    //   :---------------------------:
+
     GIVEN("A 6-row-per-7-column board with state 1234243433")
     {
         Game game(6, 7);
@@ -145,7 +186,7 @@ SCENARIO("End game event emited on secondary diagonal win")
         game.play(2);
         game.play(2);
 
-        WHEN("Play on the 4th column")
+        WHEN("The player chooses the 4th column")
         {
             game.play(3);
 
@@ -158,8 +199,18 @@ SCENARIO("End game event emited on secondary diagonal win")
     }
 }
 
-SCENARIO("End game event emited on win when last play at the middle")
+SCENARIO("Win event emited on win when last play at the middle")
 {
+    //   : 1 : 2 : 3 : 4 : 5 : 6 : 7 :
+    //   :---:---:---:---:---:---:---:
+    // 1 :   :   :   :   :   :   :   :
+    // 2 :   :   :   :   :   :   :   :
+    // 3 :   :   :   :   :   :   :   :
+    // 4 :   :   :   :   :   :   :   :
+    // 5 : O : O :   : O : O :   :   :
+    // 6 : X : X :   : X : X :   :   :
+    //   :---------------------------:
+
     GIVEN("A 6-row-per-7-column board with state 11224455")
     {
         Game game(6, 7);
@@ -177,7 +228,7 @@ SCENARIO("End game event emited on win when last play at the middle")
         game.play(4);
         game.play(4);
 
-        WHEN("Play on the 3rd column")
+        WHEN("The player chooses the 3rd column")
         {
             game.play(2);
 
@@ -190,8 +241,18 @@ SCENARIO("End game event emited on win when last play at the middle")
     }
 }
 
-SCENARIO("End game event emited on player 2 win")
+SCENARIO("Win event emited on player 2 win")
 {
+    //   : 1 : 2 : 3 : 4 : 5 : 6 : 7 :
+    //   :---:---:---:---:---:---:---:
+    // 1 :   :   :   :   :   :   :   :
+    // 2 :   :   :   :   :   :   :   :
+    // 3 :   :   :   :   :   :   :   :
+    // 4 :   :   :   :   :   :   :   :
+    // 5 : X : X : X :   :   :   :   :
+    // 6 : O : O : O :   : X :   :   :
+    //   :---------------------------:
+
     GIVEN("A 6-row-per-7-column board with state 5112233")
     {
         Game game(6, 7);
@@ -208,7 +269,7 @@ SCENARIO("End game event emited on player 2 win")
         game.play(2);
         game.play(2);
 
-        WHEN("Play on the 4th column")
+        WHEN("The player chooses the 4th column")
         {
             game.play(3);
 

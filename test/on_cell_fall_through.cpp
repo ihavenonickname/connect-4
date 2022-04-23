@@ -55,14 +55,14 @@ SCENARIO("Cell fall through event happy path")
                 REQUIRE(5 == memo[5].row);
             }
 
-            THEN("The 6th event is reported as final position")
-            {
-                REQUIRE(true == memo[5].is_final_position);
-            }
-
             THEN("The 1st event is not reported as final position")
             {
                 REQUIRE(false == memo[0].is_final_position);
+            }
+
+            THEN("The 6th event is reported as final position")
+            {
+                REQUIRE(true == memo[5].is_final_position);
             }
         }
     }

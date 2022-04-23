@@ -16,11 +16,11 @@ namespace connect_four
 
         public:
 
-        Board(uint_least8_t row_count, uint_least8_t col_count);
+        Board(uint_least8_t const row_count, uint_least8_t const col_count);
 
-        bool is_inside(Position position);
-        bool is_empty(Position position);
-        bool is_filled(Position position, Player player);
-        void set(Position position, Player player);
+        bool is_inside(Position const position);
+        bool is_empty(Position const position);
+        bool is_filled(Position const position, Player const player);
+        void set(Position const position, Player const player);
     };
 }

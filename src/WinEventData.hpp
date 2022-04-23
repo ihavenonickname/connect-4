@@ -5,12 +5,8 @@
 
 namespace connect_four
 {
-    class WinEventData
+    struct WinEventData
     {
-        public:
-
         Player const winner;
-
-        explicit WinEventData(Player const winner);
     };
 }

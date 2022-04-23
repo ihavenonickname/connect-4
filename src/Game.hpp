@@ -12,9 +12,6 @@
 
 namespace connect_four
 {
-    class CellFallThroughEventData;
-    class WinEventData;
-
     class Game
     {
         Player _player;
@@ -24,13 +21,14 @@ namespace connect_four
         std::vector<std::function<void (WinEventData)>> _win_handlers;
 
         bool _check_victory(Position position);
+        Position _fall_to_right_row(Position current_position);
 
         public:
 
-        Game(uint_least8_t row_count, uint_least8_t col_count);
+        Game(uint_least8_t const row_count, uint_least8_t const col_count);
 
-        PlayResult play(uint_least8_t col);
-        void on_event(std::function<void (CellFallThroughEventData)> handler);
-        void on_event(std::function<void (WinEventData)> handler);
+        PlayResult play(uint_least8_t const col);
+        void on_event(std::function<void (CellFallThroughEventData)> const handler);
+        void on_event(std::function<void (WinEventData)> const handler);
     };
 }

@@ -4,7 +4,7 @@ CPPC := clang++
 CPPFLAGS := -std=c++11 -Werror -Wall -Wpedantic -Wconversion
 
 LINTER = cppcheck
-LINTERFLAGS =  --std=c++11 --enable=all  --error-exitcode=1
+LINTERFLAGS = --std=c++11 --enable=all  --error-exitcode=1
 
 SRCS := $(wildcard src/*.cpp)
 TSTS := $(wildcard test/*.cpp)

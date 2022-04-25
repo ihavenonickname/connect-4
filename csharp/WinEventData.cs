@@ -1,6 +1,4 @@
 namespace ConnectFour;
 
-public class WinEventData
-{
-    public Player Winner { get; init; }
-}
+public record WinEventData(Player Winner);
+

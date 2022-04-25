@@ -23,11 +23,7 @@ public class Game
             return PlayResult.GAME_ALREADY_ENDED;
         }
 
-        var initialPosition = new Position
-        {
-            Col = col,
-            Row = 0,
-        };
+        var initialPosition = new Position(0, col);
 
         if (!_board.IsInside(initialPosition))
         {
@@ -47,10 +43,7 @@ public class Game
         {
             _ended = true;
 
-            OnWin?.Invoke(new WinEventData
-            {
-                Winner = _player,
-            });
+            OnWin?.Invoke(new WinEventData(_player));
         }
         else
         {
@@ -65,21 +58,15 @@ public class Game
 
     private Position FallToRightRow(Position position)
     {
-        var nextPos = new Position
-        {
-            Row = position.Row + 1,
-            Col = position.Col,
-        };
+        var nextPos = new Position(position.Row + 1, position.Col);
 
         var isFinal = !_board.IsEmpty(nextPos);
 
-        OnCellFallThrough?.Invoke(new CellFallThroughEventData
-        {
-            Player = _player,
-            Row = position.Row,
-            Col = position.Col,
-            IsFinalPosition = isFinal,
-        });
+        OnCellFallThrough?.Invoke(new CellFallThroughEventData(
+            Player: _player,
+            Row: position.Row,
+            Col: position.Col,
+            IsFinalPosition: isFinal));
 
         return isFinal ? position : FallToRightRow(nextPos);
     }
@@ -88,11 +75,9 @@ public class Game
     {
         Func<int, int, bool> check = (dx, dy) =>
         {
-            Func<int, Position> f = i => new Position
-            {
-                Row = position.Row + dx * i,
-                Col = position.Col + dy * i,
-            };
+            Func<int, Position> f = i => new Position(
+                Row: position.Row + dx * i,
+                Col: position.Col + dy * i);
 
             var counter = 1;
             var i = 1;

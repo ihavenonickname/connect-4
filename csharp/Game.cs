@@ -100,16 +100,38 @@ public class Game
             var counter = 1;
             var i = 1;
 
-            while (_board.IsFilled(f(i), _player))
+            while (true)
             {
+                var isSamePlayer = _board.IsFilled(new Position
+                {
+                    Row = position.Row + dx * i,
+                    Col = position.Col + dy * i,
+                }, _player);
+
+                if (!isSamePlayer)
+                {
+                    break;
+                }
+
                 counter += 1;
                 i += 1;
             }
 
             i = -1;
 
-            while (_board.IsFilled(f(i), _player))
+            while (true)
             {
+                var isSamePlayer = _board.IsFilled(new Position
+                {
+                    Row = position.Row + dx * i,
+                    Col = position.Col + dy * i,
+                }, _player);
+
+                if (!isSamePlayer)
+                {
+                    break;
+                }
+
                 counter += 1;
                 i -= 1;
             }
@@ -120,8 +142,8 @@ public class Game
         return check(0, 1) || check(1, 0) || check(1, 1) || check(-1, 1);
     }
 
-    public override string ToString()
-    {
-        return $"{_board}";
-    }
+    // public override string ToString()
+    // {
+    //     return $"{_board}";
+    // }
 }

@@ -29,10 +29,7 @@ public class Board
 
     public bool IsFilled(Position position, Player player)
     {
-        var idx = Index(position);
-
-        return
-            IsInside(position) && _cells[Index(position)] == player;
+        return IsInside(position) && _cells[Index(position)] == player;
     }
 
     public void Set(Position position, Player player)
@@ -45,32 +42,32 @@ public class Board
         return position.Row * _colCount + position.Col;
     }
 
-    public override string ToString()
-    {
-        var s = "";
+    // public override string ToString()
+    // {
+    //     var s = "";
 
-        for (var row = 0; row < _rowCount; row += 1)
-        {
-            for (var col = 0; col < _colCount; col += 1)
-            {
-                var idx = row * _colCount + col;
-                switch (_cells[row * _colCount + col])
-                {
-                    case Player.PLAYER_1:
-                    s += "X  ";
-                    break;
-                    case Player.PLAYER_2:
-                    s += "O  ";
-                    break;
-                    default:
-                    s += $"{idx}  ";
-                    break;
-                }
-            }
+    //     for (var row = 0; row < _rowCount; row += 1)
+    //     {
+    //         for (var col = 0; col < _colCount; col += 1)
+    //         {
+    //             var idx = row * _colCount + col;
+    //             switch (_cells[row * _colCount + col])
+    //             {
+    //                 case Player.PLAYER_1:
+    //                 s += "X  ";
+    //                 break;
+    //                 case Player.PLAYER_2:
+    //                 s += "O  ";
+    //                 break;
+    //                 default:
+    //                 s += $"{idx}  ";
+    //                 break;
+    //             }
+    //         }
 
-            s += "\n";
-        }
+    //         s += "\n";
+    //     }
 
-        return s;
-    }
+    //     return s;
+    // }
 }

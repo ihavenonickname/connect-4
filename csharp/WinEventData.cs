@@ -1,6 +1,6 @@
 namespace ConnectFour;
 
-public class WinEventData
+public struct WinEventData
 {
     public Player Winner { get; init; }
 }

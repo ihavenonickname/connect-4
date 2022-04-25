@@ -1,4 +1,5 @@
 ﻿// See https://aka.ms/new-console-template for more information
+using System.Diagnostics;
 using ConnectFour;
 
 int GLOBAL_final_positions;
@@ -24,12 +25,11 @@ int nGames = int.Parse(Environment.GetCommandLineArgs()[1]);
 int nRows = int.Parse(Environment.GetCommandLineArgs()[2]);
 int nCols = int.Parse(Environment.GetCommandLineArgs()[3]);
 
-if (nGames == 0)
-{
-    Console.WriteLine("Loaded OK");
-}
+// int nGames = 1;
+// int nRows = 6;
+// int nCols = 6;
 
-for (var i = 0; i < nGames; i += 1)
+void Run()
 {
     GLOBAL_final_positions = 0;
     GLOBAL_player_1_wins = 0;
@@ -82,14 +82,38 @@ for (var i = 0; i < nGames; i += 1)
     game.Play(6);
 
     game.Play(3);
+}
+
+Run();
+
+Durations.FallToRightRow = TimeSpan.Zero;
+Durations.CheckVictory = TimeSpan.Zero;
+
+var sw = new Stopwatch();
+
+sw.Start();
+
+for (var i = 0; i < nGames; i += 1)
+{
+    Run();
 
     if (GLOBAL_final_positions != 37)
     {
-        throw new Exception("oopsie");
+        throw new Exception("oopsie 1");
     }
 
     if (GLOBAL_player_1_wins != 1)
     {
-        throw new Exception("oopsie");
+        throw new Exception("oopsie 2");
     }
+}
+
+Console.WriteLine($"Program: {sw.Elapsed}");
+Console.WriteLine($"FallToRightRow: {Durations.FallToRightRow}");
+Console.WriteLine($"CheckVictory: {Durations.CheckVictory}");
+
+public static class Durations
+{
+    public static TimeSpan CheckVictory = TimeSpan.Zero;
+    public static TimeSpan FallToRightRow = TimeSpan.Zero;
 }

@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 namespace ConnectFour;
 
 public class Game
@@ -35,11 +37,25 @@ public class Game
             return PlayResult.COLUMN_IS_FULL;
         }
 
+        var sw = new Stopwatch();
+
+        sw.Start();
+
         var position = FallToRightRow(initialPosition);
+
+        Durations.FallToRightRow += sw.Elapsed;
+
+        sw.Reset();
 
         _board.Set(position, _player);
 
-        if (CheckVictory(position))
+        sw.Start();
+
+        var isVictory = CheckVictory(position);
+
+        Durations.CheckVictory += sw.Elapsed;
+
+        if (isVictory)
         {
             _ended = true;
 
@@ -58,17 +74,27 @@ public class Game
 
     private Position FallToRightRow(Position position)
     {
-        var nextPos = new Position(position.Row + 1, position.Col);
+        Position nextPos;
 
-        var isFinal = !_board.IsEmpty(nextPos);
+        while (true)
+        {
+            nextPos = position.MoveHorizontally(1);
 
-        OnCellFallThrough?.Invoke(new CellFallThroughEventData(
-            Player: _player,
-            Row: position.Row,
-            Col: position.Col,
-            IsFinalPosition: isFinal));
+            var isFinal = !_board.IsEmpty(nextPos);
 
-        return isFinal ? position : FallToRightRow(nextPos);
+            OnCellFallThrough?.Invoke(new CellFallThroughEventData(
+                Player: _player,
+                Row: position.Row,
+                Col: position.Col,
+                IsFinalPosition: isFinal));
+
+            if (isFinal)
+            {
+                return position;
+            }
+
+            position = nextPos;
+        }
     }
 
     private bool CheckVictory(Position position)
@@ -95,11 +121,13 @@ public class Game
         //     return counter >= 4;
         // };
 
-        return
-            Check(position.MoveVertically) ||
-            Check(position.MoveHorizontally) ||
-            Check(position.MovePrimaryDiagonal) ||
-            Check(position.MoveSecondaryDiagonal);
+        // return
+        //     Check(position.MoveVertically) ||
+        //     Check(position.MoveHorizontally) ||
+        //     Check(position.MovePrimaryDiagonal) ||
+        //     Check(position.MoveSecondaryDiagonal);
+
+        return Check(position);
     }
 
     private bool Check(Func<int, Position> f)
@@ -122,6 +150,107 @@ public class Game
         }
 
         return counter >= 4;
+    }
+
+    private bool Check(Position position)
+    {
+        // vertically
+
+        var counter = 1;
+        var i = 1;
+
+        while (_board.IsFilled(position.MoveVertically(i), _player))
+        {
+            counter += 1;
+            i += 1;
+        }
+
+        i = -1;
+
+        while (_board.IsFilled(position.MoveVertically(i), _player))
+        {
+            counter += 1;
+            i -= 1;
+        }
+
+        if (counter >= 4)
+        {
+            return true;
+        }
+
+        // horiontally
+
+        counter = 1;
+        i = 1;
+
+        while (_board.IsFilled(position.MoveHorizontally(i), _player))
+        {
+            counter += 1;
+            i += 1;
+        }
+
+        i = -1;
+
+        while (_board.IsFilled(position.MoveHorizontally(i), _player))
+        {
+            counter += 1;
+            i -= 1;
+        }
+
+        if (counter >= 4)
+        {
+            return true;
+        }
+
+        // primary diagonal
+
+        counter = 1;
+        i = 1;
+
+        while (_board.IsFilled(position.MovePrimaryDiagonal(i), _player))
+        {
+            counter += 1;
+            i += 1;
+        }
+
+        i = -1;
+
+        while (_board.IsFilled(position.MovePrimaryDiagonal(i), _player))
+        {
+            counter += 1;
+            i -= 1;
+        }
+
+        if (counter >= 4)
+        {
+            return true;
+        }
+
+        // secondary diagonal
+
+        counter = 1;
+        i = 1;
+
+        while (_board.IsFilled(position.MoveSecondaryDiagonal(i), _player))
+        {
+            counter += 1;
+            i += 1;
+        }
+
+        i = -1;
+
+        while (_board.IsFilled(position.MoveSecondaryDiagonal(i), _player))
+        {
+            counter += 1;
+            i -= 1;
+        }
+
+        if (counter >= 4)
+        {
+            return true;
+        }
+
+        return false;
     }
 
     // public override string ToString()

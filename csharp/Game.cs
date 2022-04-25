@@ -73,33 +73,55 @@ public class Game
 
     private bool CheckVictory(Position position)
     {
-        Func<Func<int, Position>, bool> check = f =>
-        {
-            var counter = 1;
-            var i = 1;
+        // Func<Func<int, Position>, bool> check = f =>
+        // {
+        //     var counter = 1;
+        //     var i = 1;
 
-            while (_board.IsFilled(f(i), _player))
-            {
-                counter += 1;
-                i += 1;
-            }
+        //     while (_board.IsFilled(f(i), _player))
+        //     {
+        //         counter += 1;
+        //         i += 1;
+        //     }
 
-            i = -1;
+        //     i = -1;
 
-            while (_board.IsFilled(f(i), _player))
-            {
-                counter += 1;
-                i -= 1;
-            }
+        //     while (_board.IsFilled(f(i), _player))
+        //     {
+        //         counter += 1;
+        //         i -= 1;
+        //     }
 
-            return counter >= 4;
-        };
+        //     return counter >= 4;
+        // };
 
         return
-            check(position.MoveVertically) ||
-            check(position.MoveHorizontally) ||
-            check(position.MovePrimaryDiagonal) ||
-            check(position.MoveSecondaryDiagonal);
+            Check(position.MoveVertically) ||
+            Check(position.MoveHorizontally) ||
+            Check(position.MovePrimaryDiagonal) ||
+            Check(position.MoveSecondaryDiagonal);
+    }
+
+    private bool Check(Func<int, Position> f)
+    {
+        var counter = 1;
+        var i = 1;
+
+        while (_board.IsFilled(f(i), _player))
+        {
+            counter += 1;
+            i += 1;
+        }
+
+        i = -1;
+
+        while (_board.IsFilled(f(i), _player))
+        {
+            counter += 1;
+            i -= 1;
+        }
+
+        return counter >= 4;
     }
 
     // public override string ToString()

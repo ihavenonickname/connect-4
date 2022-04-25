@@ -20,13 +20,14 @@ void HandleWin(WinEventData eventData)
     }
 }
 
-// int nGames = int.Parse(Environment.GetCommandLineArgs()[1]);
-// int nRows = int.Parse(Environment.GetCommandLineArgs()[2]);
-// int nCols = int.Parse(Environment.GetCommandLineArgs()[3]);
+int nGames = int.Parse(Environment.GetCommandLineArgs()[1]);
+int nRows = int.Parse(Environment.GetCommandLineArgs()[2]);
+int nCols = int.Parse(Environment.GetCommandLineArgs()[3]);
 
-int nGames = 1;
-int nRows = 6;
-int nCols = 7;
+if (nGames == 0)
+{
+    Console.WriteLine("Loaded OK");
+}
 
 for (var i = 0; i < nGames; i += 1)
 {

@@ -81,10 +81,7 @@ public class Game
             IsFinalPosition = isFinal,
         });
 
-        return
-            isFinal
-            ? position
-            : FallToRightRow(nextPos);
+        return isFinal ? position : FallToRightRow(nextPos);
     }
 
     private bool CheckVictory(Position position)
@@ -100,38 +97,16 @@ public class Game
             var counter = 1;
             var i = 1;
 
-            while (true)
+            while (_board.IsFilled(f(i), _player))
             {
-                var isSamePlayer = _board.IsFilled(new Position
-                {
-                    Row = position.Row + dx * i,
-                    Col = position.Col + dy * i,
-                }, _player);
-
-                if (!isSamePlayer)
-                {
-                    break;
-                }
-
                 counter += 1;
                 i += 1;
             }
 
             i = -1;
 
-            while (true)
+            while (_board.IsFilled(f(i), _player))
             {
-                var isSamePlayer = _board.IsFilled(new Position
-                {
-                    Row = position.Row + dx * i,
-                    Col = position.Col + dy * i,
-                }, _player);
-
-                if (!isSamePlayer)
-                {
-                    break;
-                }
-
                 counter += 1;
                 i -= 1;
             }

@@ -1,6 +1,6 @@
 namespace ConnectFour;
 
-public struct CellFallThroughEventData
+public class CellFallThroughEventData
 {
     public Player Player { get; init; }
     public int Row { get; init; }

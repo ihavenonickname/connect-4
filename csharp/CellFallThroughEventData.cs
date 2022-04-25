@@ -2,8 +2,8 @@ namespace ConnectFour;
 
 public class CellFallThroughEventData
 {
-    public readonly Player Player { get; set; }
-    public readonly int Row { get; set; }
-    public readonly int Col { get; set; }
-    public readonly bool IsFinalPosition { get; set; }
+    public Player Player { get; init; }
+    public int Row { get; init; }
+    public int Col { get; init; }
+    public bool IsFinalPosition { get; init; }
 }

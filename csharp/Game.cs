@@ -73,12 +73,8 @@ public class Game
 
     private bool CheckVictory(Position position)
     {
-        Func<int, int, bool> check = (dx, dy) =>
+        Func<Func<int, Position>, bool> check = f =>
         {
-            Func<int, Position> f = i => new Position(
-                Row: position.Row + dx * i,
-                Col: position.Col + dy * i);
-
             var counter = 1;
             var i = 1;
 
@@ -99,7 +95,11 @@ public class Game
             return counter >= 4;
         };
 
-        return check(0, 1) || check(1, 0) || check(1, 1) || check(-1, 1);
+        return
+            check(position.MoveVertically) ||
+            check(position.MoveHorizontally) ||
+            check(position.MovePrimaryDiagonal) ||
+            check(position.MoveSecondaryDiagonal);
     }
 
     // public override string ToString()
